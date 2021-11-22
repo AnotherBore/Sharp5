@@ -1,10 +1,12 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using Lab5;
 
 namespace Lab5.Objects
 {
     internal class BaseObject
     {
+        Random random = new Random();
         public float X;
         public float Y;
         public float Angle;
@@ -49,6 +51,11 @@ namespace Lab5.Objects
             {
                 this.OnOverlap(this, obj);
             }
+        }
+        public virtual void GenerateRandomly(int maxX, int maxY)
+        {
+            X = random.Next(0, maxX);
+            Y = random.Next(0, maxY);
         }
     }
 }

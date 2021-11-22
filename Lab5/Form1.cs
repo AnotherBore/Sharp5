@@ -14,18 +14,23 @@ namespace Lab5
     public partial class Form1 : Form
     {
         List<BaseObject> objects = new List<BaseObject>();
+        int score = 0;
         Player player;
         Marker marker;
+        Target target1 = new Target(0,0,0);
+        Target target2 = new Target(0,0,0);
         public Form1()
         {
             InitializeComponent();
 
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
+            target1.GenerateRandomly(pbMain.Width, pbMain.Height);
+            target2.GenerateRandomly(pbMain.Width, pbMain.Height);
 
             player.OnOverlap += (p, obj) =>
             {
-                txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                txtLog.Text = $"[{DateTime.Now:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
             };
 
             player.OnMarkerOverlap += (m) =>
@@ -34,16 +39,25 @@ namespace Lab5
                 marker = null;
             };
 
+            player.OnTargetOverlap += (t) =>
+            {
+                score++;
+                t.GenerateRandomly(pbMain.Width, pbMain.Height);
+            };
+
             objects.Add(marker);
             objects.Add(player);
+            objects.Add(target1);
+            objects.Add(target2);
+
         }
 
         private void pbMain_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
             g.Clear(Color.White);
-
-            
+            lblScore.Text = $"Очков: {score}";
+            updatePlayer();
 
             foreach (var obj in objects.ToList())
             {
@@ -62,9 +76,7 @@ namespace Lab5
         }
 
         private void timer1_Tick(object sender, EventArgs e)
-        {
-
-            updatePlayer();
+        {          
             pbMain.Invalidate();
         }
 

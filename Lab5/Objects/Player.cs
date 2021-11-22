@@ -11,6 +11,8 @@ namespace Lab5.Objects
     class Player : BaseObject
     {
         public Action<Marker> OnMarkerOverlap;
+        public Action<Target> OnTargetOverlap;
+
         public float vX, vY;
         public Player(float x, float y, float angle) : base(x, y, angle)
         {
@@ -44,7 +46,10 @@ namespace Lab5.Objects
             {
                 OnMarkerOverlap(obj as Marker);
             }
-
+            if (obj is Target)
+            {
+                OnTargetOverlap(obj as Target);
+            }
         }
     }
 }
