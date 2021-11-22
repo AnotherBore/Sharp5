@@ -43,6 +43,8 @@ namespace Lab5
             var g = e.Graphics;
             g.Clear(Color.White);
 
+            
+
             foreach (var obj in objects.ToList())
             {
                 if (obj != player && player.Overlaps(obj, g))
@@ -61,19 +63,8 @@ namespace Lab5
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(marker != null)
-            {
-                float dx = marker.X - player.X;
-                float dy = marker.Y - player.Y;
 
-                float lenght = MathF.Sqrt(dx * dx + dy * dy);
-                dx /= lenght;
-                dy /= lenght;
-
-                player.X += dx * 2;
-                player.Y += dy * 2;
-            }
-           
+            updatePlayer();
             pbMain.Invalidate();
         }
 
@@ -86,6 +77,29 @@ namespace Lab5
             }
             marker.X = e.X;
             marker.Y = e.Y;
+        }
+        private void updatePlayer()
+        {
+            if (marker != null)
+            {
+                float dx = marker.X - player.X;
+                float dy = marker.Y - player.Y;
+
+                float lenght = MathF.Sqrt(dx * dx + dy * dy);
+                dx /= lenght;
+                dy /= lenght;
+
+                player.vX += dx * 0.5f;
+                player.vY += dy * 0.5f;
+
+                player.Angle = 90 - MathF.Atan2(player.vX, player.vY) * 180 / MathF.PI;
+            }
+
+            player.vX += -player.vX * 0.1f;
+            player.vY += -player.vY * 0.1f;
+
+            player.X += player.vX;
+            player.Y += player.vY;
         }
     }
 }
