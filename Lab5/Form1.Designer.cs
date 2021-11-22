@@ -31,14 +31,16 @@
             this.components = new System.ComponentModel.Container();
             this.pbMain = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.txtLog = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
             // pbMain
             // 
-            this.pbMain.Location = new System.Drawing.Point(12, 12);
+            this.pbMain.Location = new System.Drawing.Point(22, 26);
+            this.pbMain.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pbMain.Name = "pbMain";
-            this.pbMain.Size = new System.Drawing.Size(776, 426);
+            this.pbMain.Size = new System.Drawing.Size(1441, 909);
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
             this.pbMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMain_Paint);
@@ -50,12 +52,22 @@
             this.timer1.Interval = 30;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // txtLog
+            // 
+            this.txtLog.Location = new System.Drawing.Point(1472, 26);
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(276, 909);
+            this.txtLog.TabIndex = 1;
+            this.txtLog.Text = "";
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1760, 960);
+            this.Controls.Add(this.txtLog);
             this.Controls.Add(this.pbMain);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Обработка событий";
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
@@ -67,5 +79,6 @@
 
         private PictureBox pbMain;
         private System.Windows.Forms.Timer timer1;
+        private RichTextBox txtLog;
     }
 }
