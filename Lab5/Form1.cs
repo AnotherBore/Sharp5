@@ -17,8 +17,9 @@ namespace Lab5
         int score = 0;
         Player player;
         Marker marker;
-        Target target1 = new Target(0,0,0);
-        Target target2 = new Target(0,0,0);
+        BlackRealm blackRealm = new(0,0);
+        Target target1 = new (0,0,0);
+        Target target2 = new (0,0,0);
         public Form1()
         {
             InitializeComponent();
@@ -27,9 +28,11 @@ namespace Lab5
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
             target1.GenerateRandomly(pbMain.Width, pbMain.Height);
             target2.GenerateRandomly(pbMain.Width, pbMain.Height);
+            blackRealm = new BlackRealm(pbMain.Width/3, pbMain.Height);
 
             player.OnOverlap += (p, obj) =>
             {
+                if(!(obj is BlackRealm))
                 txtLog.Text = $"[{DateTime.Now:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
             };
 
@@ -45,10 +48,19 @@ namespace Lab5
                 t.GenerateRandomly(pbMain.Width, pbMain.Height);
             };
 
-            objects.Add(marker);
-            objects.Add(player);
+            blackRealm.OnOverlap = (obj1, obj2) => {
+                obj2.ChangeColor(true);
+            };
+
+            blackRealm.OnNonOverlap = (obj1, obj2) => {
+                obj2.ChangeColor(false);
+            };
+
+            objects.Add(blackRealm);
+            objects.Add(marker);          
             objects.Add(target1);
             objects.Add(target2);
+            objects.Add(player);
 
         }
 
@@ -58,6 +70,7 @@ namespace Lab5
             g.Clear(Color.White);
             lblScore.Text = $"Очков: {score}";
             updatePlayer();
+            moveRealm();
 
             foreach (var obj in objects.ToList())
             {
@@ -65,6 +78,13 @@ namespace Lab5
                 {
                     player.Overlap(obj);
                     obj.Overlap(player);
+                }
+
+                if (!(obj is BlackRealm))
+                {
+                    if (blackRealm.Overlaps(obj, g))
+                        blackRealm.Overlap(obj);
+                    else blackRealm.NonOverlap(obj);
                 }
             }
 
@@ -74,9 +94,12 @@ namespace Lab5
                 obj.Render(g);
             }
         }
-
+        private void moveRealm()
+        {
+            blackRealm.X = (blackRealm.X + 2) % (pbMain.Width * 2);
+        }
         private void timer1_Tick(object sender, EventArgs e)
-        {          
+        {        
             pbMain.Invalidate();
         }
 

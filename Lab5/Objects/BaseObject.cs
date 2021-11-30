@@ -10,7 +10,8 @@ namespace Lab5.Objects
         public float X;
         public float Y;
         public float Angle;
-        public Action<BaseObject, BaseObject> OnOverlap;
+        public bool IsColorChanged;
+        public Action<BaseObject, BaseObject> OnOverlap, OnNonOverlap;
         public BaseObject(float x, float y, float angle)
         {
             X = x;
@@ -52,10 +53,21 @@ namespace Lab5.Objects
                 this.OnOverlap(this, obj);
             }
         }
+        public virtual void NonOverlap(BaseObject obj)
+        {
+            if (this.OnNonOverlap != null)
+            {
+                this.OnNonOverlap(this, obj);
+            }
+        }
         public virtual void GenerateRandomly(int maxX, int maxY)
         {
-            X = random.Next(0, maxX);
-            Y = random.Next(0, maxY);
+            X = random.Next(15, maxX);
+            Y = random.Next(15, maxY);
+        }
+        public void ChangeColor(bool isChanged)
+        {
+            IsColorChanged = isChanged;
         }
     }
 }

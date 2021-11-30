@@ -15,16 +15,32 @@ namespace Lab5.Objects
         }
         public override void Render(Graphics g)
         {
-            g.FillEllipse(
+            if (!IsColorChanged)
+            {
+                g.FillEllipse(
                 new SolidBrush(Color.LightGreen),
                 -15, -15,
                 30, 30
                 );
-            g.DrawEllipse(
-                new Pen(Color.DarkCyan, 2),
+                g.DrawEllipse(
+                    new Pen(Color.DarkCyan, 2),
+                    -15, -15,
+                    30, 30
+                    );
+            }
+            else
+            {
+                g.FillEllipse(
+                new SolidBrush(Color.Gray),
                 -15, -15,
                 30, 30
                 );
+                g.DrawEllipse(
+                    new Pen(Color.White, 2),
+                    -15, -15,
+                    30, 30
+                    );
+            }
         }
         public override GraphicsPath GetGraphicsPath()
         {

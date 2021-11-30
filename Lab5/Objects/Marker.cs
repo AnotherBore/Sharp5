@@ -15,9 +15,18 @@ namespace Lab5.Objects
         }
         public override void Render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Red), -3, -3, 6, 6);
-            g.DrawEllipse(new Pen(Color.Red, 2), -6, -6, 12, 12);
-            g.DrawEllipse(new Pen(Color.Red, 2), -10, -10, 20, 20);
+            if (!IsColorChanged)
+            {
+                g.FillEllipse(new SolidBrush(Color.Red), -3, -3, 6, 6);
+                g.DrawEllipse(new Pen(Color.Red, 2), -6, -6, 12, 12);
+                g.DrawEllipse(new Pen(Color.Red, 2), -10, -10, 20, 20);
+            }
+            else
+            {
+                g.FillEllipse(new SolidBrush(Color.Gray), -3, -3, 6, 6);
+                g.DrawEllipse(new Pen(Color.Gray, 2), -6, -6, 12, 12);
+                g.DrawEllipse(new Pen(Color.Gray, 2), -10, -10, 20, 20);
+            }
         }
         public override GraphicsPath GetGraphicsPath()
         {
